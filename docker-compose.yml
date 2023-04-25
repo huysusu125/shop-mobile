@@ -1,9 +1,0 @@
-version: '3.8'
-services:
-  user-service:
-    image: user-service
-    ports:
-      - 8080:8080
-    container_name: shop-service
-    environment:
-      DB_URL: "jdbc:postgresql://postgres:5432/shop?useSSL=false&useUnicode=true&characterEncoding=UTF-8"

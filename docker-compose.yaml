@@ -1,0 +1,15 @@
+version: '3.0'
+services:
+  shop:
+    image: shop
+    container_name: shop
+    ports:
+      - 8080:8080
+    environment:
+      DB_URL: "jdbc:postgresql://postgresql:5432/shop?useSSL=false&useUnicode=true&characterEncoding=UTF-8"
+    networks:
+      - shop
+networks:
+  shop:
+    external: true
+
