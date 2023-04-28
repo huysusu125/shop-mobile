@@ -2,14 +2,12 @@ server:
   port: 8080
 
 spring:
-  liquibase:
-    url: ${DB_URL_JDBC:jdbc:postgresql://localhost:5432/shop}
-    user: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:myPassword}
   r2dbc:
     url: ${DB_URL_R2DBC:r2dbc:postgresql://localhost:5432/shop}
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:myPassword}
+    metrics:
+      enabled: false
 
 jwt:
   public-key: |
