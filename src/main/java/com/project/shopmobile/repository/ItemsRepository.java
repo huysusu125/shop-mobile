@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.UUID;
 
 public interface ItemsRepository extends JpaRepository<Items, UUID>, JpaSpecificationExecutor<Items> {
+
 }

@@ -7,29 +7,25 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
-@Table(name = "items")
+@Table(name = "item_description")
 @Entity
 @Getter
 @Setter
-public class Items {
-
+public class ItemDescription {
     @Id
-    private UUID Id;
-    @Column(name = "type")
-    private Integer type;
-    @Column(name = "title")
-    private String title;
-    @Column(name = "description")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = false, updatable = false)
+    private Long id;
+
+    @Column(name = "item_id", nullable = false)
+    private UUID itemId;
+
+    @Column(name = "description", nullable = false)
     private String description;
-    @Column(name = "min_price")
-    private BigDecimal minPrice;
-    @Column(name = "image")
-    private String image;
+
 }
