@@ -2,12 +2,14 @@ server:
   port: 8080
 
 spring:
-  r2dbc:
-    url: ${DB_URL_R2DBC:r2dbc:postgresql://localhost:5432/shop}
+  jpa:
+    show-sql: ${SHOW_SQL:true}
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/shop}
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:myPassword}
-    metrics:
-      enabled: false
 
 jwt:
   public-key: |

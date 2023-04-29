@@ -29,5 +29,11 @@ create table if not exists type_items
     name varchar(64)
 );
 
+alter table type_items
+    add if not exists banner TEXT;
+
+alter table items
+    rename column "minPrice" to min_price;
+
 
 

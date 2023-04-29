@@ -1,27 +1,37 @@
 package com.project.shopmobile.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.util.UUID;
 
-@EqualsAndHashCode()
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
-@Table("items")
+@Table(name = "items")
+@Entity
+@Getter
+@Setter
 public class Items {
-    @Column("type")
+
+    @Id
+    UUID Id;
+    @Column(name = "type")
     private Integer type;
-    @Column("title")
+    @Column(name = "title")
     private String title;
-    @Column("description")
+    @Column(name = "description")
     private String description;
-    @Column("minPrice")
+    @Column(name = "min_price")
     private BigDecimal minPrice;
-    @Column("image")
+    @Column(name = "image")
     private String image;
 }

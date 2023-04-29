@@ -1,19 +1,28 @@
 package com.project.shopmobile.entity;
 
 import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder(toBuilder = true)
+@Builder
 @Table(name = "\"user\"")
-public class User extends BaseEntity {
-    @Column("username")
+@Entity
+public class User {
+
+    @Id
+    private UUID id;
+
+    @Column(name = "username")
     private String username;
-    @Column("password")
+
+    @Column(name = "password")
     private String password;
 }

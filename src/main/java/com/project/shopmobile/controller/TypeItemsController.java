@@ -1,10 +1,10 @@
 package com.project.shopmobile.controller;
 
 import com.project.shopmobile.service.ItemsService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
 
 
 @RequestMapping("/type-items")
@@ -17,7 +17,7 @@ public class TypeItemsController {
         this.itemsService = itemsService;
     }
     @GetMapping
-    Flux<?> getAllTypeItems() {
+    ResponseEntity<?> getAllTypeItems() {
         return itemsService.getAllTypeItems();
     }
 }

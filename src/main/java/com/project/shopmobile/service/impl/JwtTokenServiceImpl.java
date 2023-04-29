@@ -4,8 +4,6 @@ package com.project.shopmobile.service.impl;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;
-import com.project.shopmobile.entity.BaseEntity;
-
 import com.project.shopmobile.entity.User;
 import com.project.shopmobile.service.JwtTokenService;
 import lombok.SneakyThrows;
@@ -20,7 +18,8 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.*;
+import java.util.Base64;
+import java.util.Date;
 
 @Component
 @Slf4j

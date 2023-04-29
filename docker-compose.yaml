@@ -4,10 +4,10 @@ services:
     image: shop
     container_name: shop
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
-      DB_URL_JDBC: "jdbc:postgresql://postgresql:5432/shop?useSSL=false&useUnicode=true&characterEncoding=UTF-8"
-      DB_URL_R2DBC: "r2dbc:postgresql://postgresql:5432/shop"
+      DB_URL: "jdbc:postgresql://postgresql:5432/shop?useSSL=false&useUnicode=true&characterEncoding=UTF-8"
+      SHOW_SQL: false
     networks:
       - shop
 networks:
