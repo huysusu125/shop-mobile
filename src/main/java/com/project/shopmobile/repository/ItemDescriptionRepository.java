@@ -8,5 +8,10 @@ import java.util.UUID;
 
 public interface ItemDescriptionRepository extends JpaRepository<ItemDescription, Long> {
 
-    List<ItemDescription> findAllByItemId(UUID itemId);
+//    List<ItemDescription> findAllByItemId(UUID itemId);
+    List<ItemDescriptionInterface> findAllByItemId(UUID itemId);
+    interface ItemDescriptionInterface {
+        Long getId();
+        String getDescription();
+    }
 }

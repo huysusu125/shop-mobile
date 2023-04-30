@@ -1,6 +1,7 @@
 package com.project.shopmobile.dto;
 
 import com.project.shopmobile.entity.ItemDescription;
+import com.project.shopmobile.repository.ItemDescriptionRepository;
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,5 +18,5 @@ public class DetailItem {
     private String description;
     private BigDecimal minPrice;
     private String image;
-    private List<ItemDescription> descriptionDetails;
+    private List<ItemDescriptionRepository.ItemDescriptionInterface> descriptionDetails;
 }

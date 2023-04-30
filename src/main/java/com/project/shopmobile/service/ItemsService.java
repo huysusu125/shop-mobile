@@ -52,7 +52,7 @@ public class ItemsService {
     public ResponseEntity<?> getDetailItems(UUID id) {
         CompletableFuture<Items> completableFuture = CompletableFuture
                 .supplyAsync(() -> itemsRepository.findById(id).get());
-        CompletableFuture<List<ItemDescription>> completableFuture1 = CompletableFuture
+        CompletableFuture<List<ItemDescriptionRepository.ItemDescriptionInterface>> completableFuture1 = CompletableFuture
                 .supplyAsync(() -> itemDescriptionRepository.findAllByItemId(id));
         return ResponseEntity.ok(DetailItem
                 .builder()
