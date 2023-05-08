@@ -4,13 +4,14 @@ import com.project.shopmobile.repository.ItemDescriptionRepository;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
 @Data
 @Builder
-public class DetailItem {
+public class DetailItem implements Serializable {
     private UUID Id;
     private Integer type;
     private String title;
@@ -18,4 +19,5 @@ public class DetailItem {
     private BigDecimal minPrice;
     private String image;
     private List<ItemDescriptionRepository.ItemDescriptionInterface> descriptionDetails;
+    private List<String> ImageUrls;
 }

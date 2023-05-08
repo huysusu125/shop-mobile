@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-public class Items {
+public class Items implements Serializable {
 
     @Id
     private UUID Id;

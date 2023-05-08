@@ -5,10 +5,7 @@ import com.project.shopmobile.dto.ListRes;
 import com.project.shopmobile.dto.LoginRequest;
 import com.project.shopmobile.entity.Items;
 import com.project.shopmobile.entity.User;
-import com.project.shopmobile.repository.ItemDescriptionRepository;
-import com.project.shopmobile.repository.ItemsRepository;
-import com.project.shopmobile.repository.TypeItemsRepository;
-import com.project.shopmobile.repository.UserRepository;
+import com.project.shopmobile.repository.*;
 import com.project.shopmobile.specification.ItemsSpecification;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
@@ -22,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -31,15 +29,18 @@ public class ItemsService {
     private final TypeItemsRepository typeItemsRepository;
     private final ItemsRepository itemsRepository;
     private final ItemDescriptionRepository itemDescriptionRepository;
+
+    private final ItemImageRepository itemImageRepository;
     public ItemsService(JwtTokenService jwtTokenService, UserRepository userRepository,
                         TypeItemsRepository typeItemsRepository,
                         ItemsRepository itemsRepository,
-                        ItemDescriptionRepository itemDescriptionRepository) {
+                        ItemDescriptionRepository itemDescriptionRepository, ItemImageRepository itemImageRepository) {
         this.jwtTokenService = jwtTokenService;
         this.userRepository = userRepository;
         this.typeItemsRepository = typeItemsRepository;
         this.itemsRepository = itemsRepository;
         this.itemDescriptionRepository = itemDescriptionRepository;
+        this.itemImageRepository = itemImageRepository;
     }
 
     @SneakyThrows
@@ -62,10 +63,13 @@ public class ItemsService {
 
     @SneakyThrows
     public ResponseEntity<?> getDetailItems(UUID id) {
+        CompletableFuture<List<ItemImageRepository.ItemImageInterface>> completableFuture3 = CompletableFuture
+                .supplyAsync(() -> itemImageRepository.findAllByItemId(id));
         CompletableFuture<Items> completableFuture = CompletableFuture
-                .supplyAsync(() -> itemsRepository.findById(id).get());
+                .supplyAsync(() -> itemsRepository.findById(id).orElse(null));
         CompletableFuture<List<ItemDescriptionRepository.ItemDescriptionInterface>> completableFuture1 = CompletableFuture
                 .supplyAsync(() -> itemDescriptionRepository.findAllByItemId(id));
+
         return ResponseEntity.ok(DetailItem
                 .builder()
                         .Id(completableFuture.get().getId())
@@ -75,6 +79,11 @@ public class ItemsService {
                         .minPrice(completableFuture.get().getMinPrice())
                         .image(completableFuture.get().getImage())
                         .descriptionDetails(completableFuture1.get())
+                        .ImageUrls(completableFuture3
+                                .get()
+                                .stream()
+                                .map(ItemImageRepository.ItemImageInterface::getImage)
+                                .collect(Collectors.toList()))
                 .build());
     }
 

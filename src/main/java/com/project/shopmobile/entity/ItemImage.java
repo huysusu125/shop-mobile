@@ -10,14 +10,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
-@Table(name = "item_description")
+@Table(name = "item_image")
 @Entity
 @Getter
 @Setter
-public class ItemDescription implements Serializable {
+public class ItemImage implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, insertable = false, updatable = false)
@@ -26,7 +28,7 @@ public class ItemDescription implements Serializable {
     @Column(name = "item_id", nullable = false)
     private UUID itemId;
 
-    @Column(name = "description", nullable = false)
-    private String description;
+    @Column(name = "image", nullable = false)
+    private String image;
 
 }

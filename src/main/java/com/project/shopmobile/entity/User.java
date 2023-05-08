@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.UUID;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @Table(name = "\"user\"")
 @Entity
-public class User {
+public class User implements Serializable {
 
     @Id
     private Long id;
