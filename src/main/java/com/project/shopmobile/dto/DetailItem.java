@@ -1,6 +1,5 @@
 package com.project.shopmobile.dto;
 
-import com.project.shopmobile.entity.ItemDescription;
 import com.project.shopmobile.repository.ItemDescriptionRepository;
 import lombok.Builder;
 import lombok.Data;

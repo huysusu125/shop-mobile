@@ -18,7 +18,7 @@ import java.util.UUID;
 public class User {
 
     @Id
-    private UUID id;
+    private Long id;
 
     @Column(name = "username")
     private String username;

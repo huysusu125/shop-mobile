@@ -8,7 +8,6 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -32,4 +31,6 @@ public class Items {
     private BigDecimal minPrice;
     @Column(name = "image")
     private String image;
+    @Column(name = "time_baohanh")
+    private String timeBaohanh;
 }
