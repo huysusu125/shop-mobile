@@ -1,3 +1,8 @@
 docker build -t shop .
 
 docker-compose up 
+
+public key
+a6f556c3484074beb37110f219675986
+private key
+229ae65c5e9d2c86

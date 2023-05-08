@@ -90,10 +90,14 @@ public class ItemsService {
     public ResponseEntity<?> login(LoginRequest loginRequest) {
         User user = userRepository.findByUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("tên đăng nhập hoặc mật khẩu không đúng");
         }
         Map<String, String> response = new HashMap<>();
         response.put("accessToken", jwtTokenService.generateOauth2AccessToken(user));
         return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<?> getRandomAllItems() {
+        return ResponseEntity.ok(itemsRepository.findRandom());
     }
 }

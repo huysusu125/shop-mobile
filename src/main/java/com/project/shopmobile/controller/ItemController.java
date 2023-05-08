@@ -27,4 +27,9 @@ public class ItemController {
     ResponseEntity<?> getDetailItems(@PathVariable UUID id) {
         return itemsService.getDetailItems(id);
     }
+
+    @GetMapping("random")
+    ResponseEntity<?> getRandomAllItems() {
+        return itemsService.getRandomAllItems();
+    }
 }
