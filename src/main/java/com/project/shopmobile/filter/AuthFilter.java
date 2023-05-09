@@ -32,13 +32,11 @@ public class AuthFilter implements Filter {
         if (req.getRequestURI().contains("/admin/")) {
 
             try {
-                if (jwtTokenService.verifyToken(req.getHeader("Authorization"))) {
-                    filterChain.doFilter(request, response);
+                if (!jwtTokenService.verifyToken(req.getHeader("Authorization"))) {
+                    resp.setStatus(HttpStatus.UNAUTHORIZED.value());
+                    resp.getWriter().write("Unauthorized");
                     return;
                 }
-                resp.setStatus(HttpStatus.UNAUTHORIZED.value());
-                resp.getWriter().write("Unauthorized");
-                return;
             } catch (Exception e) {
                 resp.setStatus(HttpStatus.UNAUTHORIZED.value());
                 resp.getWriter().write("Unauthorized");

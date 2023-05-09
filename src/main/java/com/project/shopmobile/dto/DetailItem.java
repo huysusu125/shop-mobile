@@ -18,6 +18,7 @@ public class DetailItem implements Serializable {
     private String description;
     private BigDecimal minPrice;
     private String image;
+    private String timeBaohanh;
     private List<ItemDescriptionRepository.ItemDescriptionInterface> descriptionDetails;
     private List<String> ImageUrls;
 }
