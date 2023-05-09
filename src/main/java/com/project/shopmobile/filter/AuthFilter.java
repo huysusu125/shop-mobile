@@ -34,6 +34,7 @@ public class AuthFilter implements Filter {
             try {
                 if (jwtTokenService.verifyToken(req.getHeader("Authorization"))) {
                     filterChain.doFilter(request, response);
+                    return;
                 }
                 resp.setStatus(HttpStatus.UNAUTHORIZED.value());
                 resp.getWriter().write("Unauthorized");
