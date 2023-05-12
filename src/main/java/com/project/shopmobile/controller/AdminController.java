@@ -1,6 +1,7 @@
 package com.project.shopmobile.controller;
 
 import com.project.shopmobile.dto.DetailItemRequest;
+import com.project.shopmobile.dto.FileRequest;
 import com.project.shopmobile.service.ImageService;
 import com.project.shopmobile.service.ItemsService;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,9 @@ public class AdminController {
     }
 
     @PostMapping("/upload-file")
-    public ResponseEntity<?> uploadImages(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> uploadImages(@RequestBody FileRequest fileRequest) {
         Map<String, String> res = new HashMap<>();
-        res.put("data", imagesService.uploadImageToFlickr(file));
+        res.put("data", imagesService.uploadImageToFlickr(fileRequest.getFile()));
         return ResponseEntity.ok(res);
     }
 
