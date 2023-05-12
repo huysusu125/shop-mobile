@@ -1,14 +1,8 @@
 package com.project.shopmobile.controller;
 
-import com.project.shopmobile.entity.ItemDescription;
-import com.project.shopmobile.entity.Items;
 import com.project.shopmobile.repository.ItemDescriptionRepository;
 import com.project.shopmobile.repository.ItemsRepository;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Arrays;
-import java.util.List;
 
 @RestController
 public class FakeDataController {

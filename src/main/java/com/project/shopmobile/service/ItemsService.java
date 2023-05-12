@@ -34,7 +34,6 @@ public class ItemsService {
     private final TypeItemsRepository typeItemsRepository;
     private final ItemsRepository itemsRepository;
     private final ItemDescriptionRepository itemDescriptionRepository;
-
     private final ItemImageRepository itemImageRepository;
 
     public ItemsService(JwtTokenService jwtTokenService, UserRepository userRepository,
@@ -48,7 +47,6 @@ public class ItemsService {
         this.itemDescriptionRepository = itemDescriptionRepository;
         this.itemImageRepository = itemImageRepository;
     }
-
     @SneakyThrows
     public ResponseEntity<?> getAllItems(Integer type, String search, Integer page, Integer size) {
         Page<Items> itemsPage = itemsRepository
@@ -60,9 +58,7 @@ public class ItemsService {
                         .data(itemsPage.getContent())
                         .count(itemsPage.getTotalElements())
                         .build());
-
     }
-
     public ResponseEntity<?> getAllTypeItems() {
         return ResponseEntity.ok(typeItemsRepository.findAll());
     }
@@ -110,6 +106,7 @@ public class ItemsService {
 
     @Transactional
     public Object createItem(DetailItemRequest detailItemRequest) {
+
         Items items = itemsRepository.save(Items
                 .builder()
                 .image(detailItemRequest.getImage())
@@ -120,33 +117,35 @@ public class ItemsService {
                         .Id(UUID.randomUUID())
                 .build());
 
-        itemDescriptionRepository.saveAll(detailItemRequest
-                .getDescriptionDetails()
-                .stream()
-                .map(description -> ItemDescription
-                        .builder()
-                        .itemId(items.getId())
-                        .description(description)
-                        .build())
-                .collect(Collectors.toList()));
+        if (detailItemRequest.getDescriptionDetails() != null &&!detailItemRequest.getDescriptionDetails().isEmpty()) {
+            itemDescriptionRepository.saveAll(detailItemRequest
+                    .getDescriptionDetails()
+                    .stream()
+                    .map(description -> ItemDescription
+                            .builder()
+                            .itemId(items.getId())
+                            .description(description)
+                            .build())
+                    .collect(Collectors.toList()));
+        }
 
-        itemImageRepository.saveAll(detailItemRequest
-                .getImageUrls()
-                .stream()
-                .map(imageUrl -> ItemImage
-                        .builder()
-                        .itemId(items.getId())
-                        .image(imageUrl)
-                        .build())
-                .collect(Collectors.toList()));
+        if (detailItemRequest.getImageUrls() != null && !detailItemRequest.getImageUrls().isEmpty()) {
+            itemImageRepository.saveAll(detailItemRequest
+                    .getImageUrls()
+                    .stream()
+                    .map(imageUrl -> ItemImage
+                            .builder()
+                            .itemId(items.getId())
+                            .image(imageUrl)
+                            .build())
+                    .collect(Collectors.toList()));
+        }
         return ObjectUtils.asMap("id", items.getId());
     }
 
-
     public void deleteItem(UUID id) {
-        CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> itemsRepository.deleteById(id));
-        CompletableFuture<Void> future2 = CompletableFuture.runAsync(() -> itemDescriptionRepository.deleteByItemId(id));
-        CompletableFuture<Void> future3 = CompletableFuture.runAsync(() -> itemImageRepository.deleteByItemId(id));
-
+        CompletableFuture.runAsync(() -> itemsRepository.deleteById(id));
+        CompletableFuture.runAsync(() -> itemDescriptionRepository.deleteByItemId(id));
+        CompletableFuture.runAsync(() -> itemImageRepository.deleteByItemId(id));
     }
 }

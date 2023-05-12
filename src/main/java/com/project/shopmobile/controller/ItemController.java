@@ -22,7 +22,6 @@ public class ItemController {
                                   @RequestParam(required = false, defaultValue = "1000") Integer size) {
         return itemsService.getAllItems(type, search, page, size);
     }
-
     @GetMapping("/{id}")
     ResponseEntity<?> getDetailItems(@PathVariable UUID id) {
         return itemsService.getDetailItems(id);
