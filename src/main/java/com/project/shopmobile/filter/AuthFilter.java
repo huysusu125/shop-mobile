@@ -26,20 +26,24 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         log.info("Request to URI :{}", req.getRequestURI());
-//        if (req.getRequestURI().contains("/admin/")) {
-//
-//            try {
-//                if (!jwtTokenService.verifyToken(req.getHeader("Authorization"))) {
-//                    resp.setStatus(HttpStatus.UNAUTHORIZED.value());
-//                    resp.getWriter().write("Unauthorized");
-//                    return;
-//                }
-//            } catch (Exception e) {
-//                resp.setStatus(HttpStatus.UNAUTHORIZED.value());
-//                resp.getWriter().write("Unauthorized");
-//                return;
-//            }
-//        }
+        if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
+            resp.setStatus(HttpServletResponse.SC_OK);
+            return;
+        }
+        if (req.getRequestURI().contains("/admin/")) {
+
+            try {
+                if (!jwtTokenService.verifyToken(req.getHeader("Authorization"))) {
+                    resp.setStatus(HttpStatus.UNAUTHORIZED.value());
+                    resp.getWriter().write("Unauthorized");
+                    return;
+                }
+            } catch (Exception e) {
+                resp.setStatus(HttpStatus.UNAUTHORIZED.value());
+                resp.getWriter().write("Unauthorized");
+                return;
+            }
+        }
         filterChain.doFilter(request, response);
     }
 }
