@@ -1,5 +1,6 @@
 package com.project.shopmobile.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,4 +38,7 @@ public class Items implements Serializable {
     private String image;
     @Column(name = "time_baohanh")
     private String timeBaohanh;
+    @JsonIgnore
+    @Column(name = "created_at")
+    private Long createdAt;
 }

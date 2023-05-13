@@ -14,6 +14,7 @@ import com.project.shopmobile.specification.ItemsSpecification;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -47,11 +48,12 @@ public class ItemsService {
         this.itemDescriptionRepository = itemDescriptionRepository;
         this.itemImageRepository = itemImageRepository;
     }
+
     @SneakyThrows
     public ResponseEntity<?> getAllItems(Integer type, String search, Integer page, Integer size) {
         Page<Items> itemsPage = itemsRepository
                 .findAll(ItemsSpecification.filterItems(search, type),
-                        PageRequest.of(page, size));
+                        PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt")));
         return ResponseEntity
                 .ok(ListRes
                         .builder()
@@ -59,6 +61,7 @@ public class ItemsService {
                         .count(itemsPage.getTotalElements())
                         .build());
     }
+
     public ResponseEntity<?> getAllTypeItems() {
         return ResponseEntity.ok(typeItemsRepository.findAll());
     }
@@ -114,10 +117,11 @@ public class ItemsService {
                 .title(detailItemRequest.getTitle())
                 .description(detailItemRequest.getDescription())
                 .timeBaohanh(detailItemRequest.getTimeBaohanh())
-                        .Id(UUID.randomUUID())
+                .Id(UUID.randomUUID())
+                .createdAt(System.currentTimeMillis())
                 .build());
 
-        if (detailItemRequest.getDescriptionDetails() != null &&!detailItemRequest.getDescriptionDetails().isEmpty()) {
+        if (detailItemRequest.getDescriptionDetails() != null && !detailItemRequest.getDescriptionDetails().isEmpty()) {
             itemDescriptionRepository.saveAll(detailItemRequest
                     .getDescriptionDetails()
                     .stream()
