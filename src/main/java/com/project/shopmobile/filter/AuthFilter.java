@@ -27,6 +27,11 @@ public class AuthFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         log.info("Request to URI :{}", req.getRequestURI());
         if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
+            resp.setHeader("Access-Control-Allow-Origin", "*");
+            resp.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+            resp.setHeader("Access-Control-Max-Age", "3600");
+            resp.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+
             resp.setStatus(HttpServletResponse.SC_OK);
             return;
         }
