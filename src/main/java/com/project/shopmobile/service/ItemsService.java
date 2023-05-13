@@ -20,13 +20,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
-
 
 @Service
 public class ItemsService {
@@ -74,7 +70,6 @@ public class ItemsService {
                 .supplyAsync(() -> itemsRepository.findById(id).orElse(null));
         CompletableFuture<List<ItemDescriptionRepository.ItemDescriptionInterface>> completableFuture1 = CompletableFuture
                 .supplyAsync(() -> itemDescriptionRepository.findAllByItemId(id));
-
         return ResponseEntity.ok(DetailItem
                 .builder()
                 .Id(completableFuture.get().getId())
@@ -85,12 +80,23 @@ public class ItemsService {
                 .image(completableFuture.get().getImage())
                 .descriptionDetails(completableFuture1.get())
                 .timeBaohanh(completableFuture.get().getTimeBaohanh())
-                .ImageUrls(completableFuture3
-                        .get()
-                        .stream()
-                        .map(ItemImageRepository.ItemImageInterface::getImage)
-                        .collect(Collectors.toList()))
+                .ImageUrls(toListImages(
+                        completableFuture
+                                .get()
+                                .getImage(),
+                        completableFuture3
+                                .get()
+                                .stream()
+                                .map(ItemImageRepository.ItemImageInterface::getImage)
+                                .collect(Collectors.toList()))
+                )
                 .build());
+    }
+
+    private List<String> toListImages(String image1, List<String> listImages) {
+        List<String> result = new ArrayList<>(Collections.singletonList(image1));
+        result.addAll(listImages);
+        return result;
     }
 
     public ResponseEntity<?> login(LoginRequest loginRequest) {
@@ -109,7 +115,6 @@ public class ItemsService {
 
     @Transactional
     public Object createItem(DetailItemRequest detailItemRequest) {
-
         Items items = itemsRepository.save(Items
                 .builder()
                 .image(detailItemRequest.getImage())
@@ -120,7 +125,6 @@ public class ItemsService {
                 .Id(UUID.randomUUID())
                 .createdAt(System.currentTimeMillis())
                 .build());
-
         if (detailItemRequest.getDescriptionDetails() != null && !detailItemRequest.getDescriptionDetails().isEmpty()) {
             itemDescriptionRepository.saveAll(detailItemRequest
                     .getDescriptionDetails()
@@ -132,7 +136,6 @@ public class ItemsService {
                             .build())
                     .collect(Collectors.toList()));
         }
-
         if (detailItemRequest.getImageUrls() != null && !detailItemRequest.getImageUrls().isEmpty()) {
             itemImageRepository.saveAll(detailItemRequest
                     .getImageUrls()

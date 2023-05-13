@@ -1,39 +1,53 @@
--- liquibase formatted sql
--- changeset huytd:1.1
-
-create table if not exists "user"
+create table "user"
 (
-    id         bigserial
+    id       bigserial
         constraint user_pk
             primary key,
-    username   varchar(36),
-    password   varchar(36),
-    is_deleted boolean
+    username varchar(36),
+    password varchar(255)
 );
 
-create table if not exists items
+alter table "user"
+    owner to postgres;
+
+create table items
 (
-    id          uuid    default gen_random_uuid(),
-    type        int,
-    title       varchar(255),
-    description varchar(255),
-    "minPrice"  decimal default 0,
-    image       TEXT
+    id           uuid         default gen_random_uuid(),
+    type         integer,
+    title        varchar(255),
+    description  varchar(255),
+    min_price    numeric      default 0,
+    image        text,
+    time_baohanh varchar(255) default '6 tháng'::character varying,
+    created_at   bigint       default 0
 );
 
-create table if not exists type_items
+create table type_items
 (
-    id   serial
+    id     serial
         constraint type_items_pk
             primary key,
-    name varchar(64)
+    name   varchar(64),
+    banner text
 );
 
-alter table type_items
-    add if not exists banner TEXT;
+create table item_description
+(
+    id          bigserial
+        constraint item_description_pk
+            primary key,
+    item_id     uuid         not null,
+    description varchar(255) not null
+);
 
-alter table items
-    rename column "minPrice" to min_price;
+create table item_image
+(
+    id      serial
+        constraint item_image_pk
+            primary key,
+    item_id uuid,
+    image   text
+);
 
 
 
