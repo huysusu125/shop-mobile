@@ -7,8 +7,6 @@ create table "user"
     password varchar(255)
 );
 
-alter table "user"
-    owner to postgres;
 
 create table items
 (
